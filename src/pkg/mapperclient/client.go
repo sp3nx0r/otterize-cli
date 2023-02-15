@@ -81,8 +81,8 @@ func (c *Client) ServiceIntents(ctx context.Context, namespaces []string) ([]Ser
 	return res.ServiceIntents, nil
 }
 
-func (c *Client) ServiceIntentsWithLabels(ctx context.Context, namespaces []string, labels []string) ([]ServiceIntentsWithLabelsServiceIntents, error) {
-	res, err := ServiceIntentsWithLabels(ctx, c.client, namespaces, labels)
+func (c *Client) ServiceIntentsWithLabels(ctx context.Context, namespaces []string, labels []string, includeAllLabels bool) ([]ServiceIntentsWithLabelsServiceIntents, error) {
+	res, err := ServiceIntentsWithLabels(ctx, c.client, namespaces, labels, includeAllLabels)
 	if err != nil {
 		return nil, err
 	}

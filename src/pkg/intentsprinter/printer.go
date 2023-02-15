@@ -19,6 +19,12 @@ metadata:
 {{- if .Namespace }}
   namespace: {{ .Namespace }}
 {{- end }}
+{{- if .Labels }}
+  labels:
+    {{- range $key, $value := .Labels }}
+    {{ $key }}: {{ $value }}
+	{{- end }}
+{{- end }}
 spec:
   service:
     name: {{ .Spec.Service.Name }}

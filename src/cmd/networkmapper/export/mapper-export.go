@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -103,7 +104,7 @@ var ExportCmd = &cobra.Command{
 			var intentsFromMapperWithLabels []mapperclient.ServiceIntentsWithLabelsServiceIntents
 			if viper.IsSet(DistinctByLabelKey) {
 				includeLabels := []string{viper.GetString(DistinctByLabelKey)}
-				intentsFromMapperV1018, err := c.ServiceIntentsWithLabels(ctxTimeout, namespacesFilter, includeLabels)
+				intentsFromMapperV1018, err := c.ServiceIntentsWithLabels(ctxTimeout, namespacesFilter, includeLabels, false)
 				if err != nil {
 					if httpErr := (mapperclient.HTTPError{}); errors.As(err, &httpErr) && httpErr.StatusCode == http.StatusUnprocessableEntity {
 						prints.PrintCliStderr("You've specified --%s, but your network mapper does not support this capability. Please upgrade.", DistinctByLabelKey)
@@ -112,23 +113,24 @@ var ExportCmd = &cobra.Command{
 				}
 				intentsFromMapperWithLabels = intentsFromMapperV1018
 			} else {
-				intentsFromMapperV1017, err := c.ServiceIntents(ctxTimeout, namespacesFilter)
+				intentsFromMapperV1017, err := c.ServiceIntentsWithLabels(ctxTimeout, namespacesFilter, nil, true)
 				if err != nil {
 					return err
 				}
-				intentsFromMapperWithLabels = lo.Map(intentsFromMapperV1017,
-					func(item mapperclient.ServiceIntentsUpToMapperV017ServiceIntents, _ int) mapperclient.ServiceIntentsWithLabelsServiceIntents {
-						return mapperclient.ServiceIntentsWithLabelsServiceIntents{
-							Client: mapperclient.ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity{
-								NamespacedNameFragment: item.Client.NamespacedNameFragment,
-							},
-							Intents: lo.Map(item.Intents, func(item mapperclient.ServiceIntentsUpToMapperV017ServiceIntentsIntentsOtterizeServiceIdentity, _ int) mapperclient.ServiceIntentsWithLabelsServiceIntentsIntentsOtterizeServiceIdentity {
-								return mapperclient.ServiceIntentsWithLabelsServiceIntentsIntentsOtterizeServiceIdentity{
-									NamespacedNameFragment: item.NamespacedNameFragment,
-								}
-							}),
-						}
-					})
+				intentsFromMapperWithLabels = intentsFromMapperV1017
+				//intentsFromMapperWithLabels = lo.Map(intentsFromMapperV1017,
+				//	func(item mapperclient.ServiceIntentsUpToMapperV017ServiceIntents, _ int) mapperclient.ServiceIntentsWithLabelsServiceIntents {
+				//		return mapperclient.ServiceIntentsWithLabelsServiceIntents{
+				//			Client: mapperclient.ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity{
+				//				NamespacedNameFragment: item.Client.NamespacedNameFragment,
+				//			},
+				//			Intents: lo.Map(item.Intents, func(item mapperclient.ServiceIntentsUpToMapperV017ServiceIntentsIntentsOtterizeServiceIdentity, _ int) mapperclient.ServiceIntentsWithLabelsServiceIntentsIntentsOtterizeServiceIdentity {
+				//				return mapperclient.ServiceIntentsWithLabelsServiceIntentsIntentsOtterizeServiceIdentity{
+				//					NamespacedNameFragment: item.NamespacedNameFragment,
+				//				}
+				//			}),
+				//		}
+				//	})
 			}
 
 			groupedIntents := make(map[distinctKey]v1alpha2.ClientIntents, 0)
@@ -160,6 +162,10 @@ var ExportCmd = &cobra.Command{
 					intentList = append(intentList, intent)
 				}
 
+				filteredClientLabels := lo.Filter(serviceIntents.Client.Labels, func(label mapperclient.ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel, _ int) bool {
+					return !strings.Contains(label.Key, "otterize.com/")
+				})
+
 				intentsOutput := v1alpha2.ClientIntents{
 					TypeMeta: v1.TypeMeta{
 						Kind:       consts.IntentsKind,
@@ -168,6 +174,9 @@ var ExportCmd = &cobra.Command{
 					ObjectMeta: v1.ObjectMeta{
 						Name:      serviceIntents.Client.Name,
 						Namespace: serviceIntents.Client.Namespace,
+						Labels: lo.SliceToMap(filteredClientLabels, func(label mapperclient.ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel) (string, string) {
+							return label.Key, label.Value
+						}),
 					},
 					Spec: &v1alpha2.IntentsSpec{Service: v1alpha2.Service{Name: serviceIntents.Client.Name}},
 				}

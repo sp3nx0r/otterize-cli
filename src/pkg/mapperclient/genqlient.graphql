@@ -15,13 +15,18 @@ fragment NamespacedNameFragment on OtterizeServiceIdentity {
 }
 
 
-query ServiceIntentsWithLabels($namespaces: [String!], $includedLabels: [String!]) {
-    serviceIntents(namespaces: $namespaces, includeLabels: $includedLabels) {
+query ServiceIntentsWithLabels($namespaces: [String!], $includedLabels: [String!], $includeAllLabels: Boolean!) {
+    serviceIntents(namespaces: $namespaces, includeLabels: $includedLabels, includeAllLabels: $includeAllLabels) {
         client {
             ...NamespacedNameFragment
             labels {
                 key
                 value
+            }
+            podOwnerKind {
+                group
+                version
+                kind
             }
         }
         intents {

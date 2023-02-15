@@ -31,6 +31,9 @@ func (v *ResetCaptureResponse) GetResetCapture() bool { return v.ResetCapture }
 
 // ServiceIntentsUpToMapperV017Response is returned by ServiceIntentsUpToMapperV017 on success.
 type ServiceIntentsUpToMapperV017Response struct {
+	// namespaces: Namespaces filter.
+	// includeLabels: Labels to include in the response. Ignored if includeAllLabels is specified.
+	// includeAllLabels: Return all labels for the pod in the response.
 	ServiceIntents []ServiceIntentsUpToMapperV017ServiceIntents `json:"serviceIntents"`
 }
 
@@ -181,6 +184,9 @@ func (v *ServiceIntentsUpToMapperV017ServiceIntentsIntentsOtterizeServiceIdentit
 
 // ServiceIntentsWithLabelsResponse is returned by ServiceIntentsWithLabels on success.
 type ServiceIntentsWithLabelsResponse struct {
+	// namespaces: Namespaces filter.
+	// includeLabels: Labels to include in the response. Ignored if includeAllLabels is specified.
+	// includeAllLabels: Return all labels for the pod in the response.
 	ServiceIntents []ServiceIntentsWithLabelsServiceIntents `json:"serviceIntents"`
 }
 
@@ -209,11 +215,18 @@ func (v *ServiceIntentsWithLabelsServiceIntents) GetIntents() []ServiceIntentsWi
 type ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity struct {
 	NamespacedNameFragment `json:"-"`
 	Labels                 []ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel `json:"labels"`
+	// If the service identity was resolved from a pod owner, the Kind of the pod owner.
+	PodOwnerKind ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind `json:"podOwnerKind"`
 }
 
 // GetLabels returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity.Labels, and is useful for accessing the field via an interface.
 func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity) GetLabels() []ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel {
 	return v.Labels
+}
+
+// GetPodOwnerKind returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity.PodOwnerKind, and is useful for accessing the field via an interface.
+func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity) GetPodOwnerKind() ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind {
+	return v.PodOwnerKind
 }
 
 // GetName returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity.Name, and is useful for accessing the field via an interface.
@@ -254,6 +267,8 @@ func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity) Un
 type __premarshalServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity struct {
 	Labels []ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel `json:"labels"`
 
+	PodOwnerKind ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind `json:"podOwnerKind"`
+
 	Name string `json:"name"`
 
 	Namespace string `json:"namespace"`
@@ -271,6 +286,7 @@ func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity) __
 	var retval __premarshalServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentity
 
 	retval.Labels = v.Labels
+	retval.PodOwnerKind = v.PodOwnerKind
 	retval.Name = v.NamespacedNameFragment.Name
 	retval.Namespace = v.NamespacedNameFragment.Namespace
 	return &retval, nil
@@ -290,6 +306,28 @@ func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabe
 // GetValue returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel.Value, and is useful for accessing the field via an interface.
 func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityLabelsPodLabel) GetValue() string {
 	return v.Value
+}
+
+// ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind includes the requested fields of the GraphQL type GroupVersionKind.
+type ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind struct {
+	Group   string `json:"group"`
+	Version string `json:"version"`
+	Kind    string `json:"kind"`
+}
+
+// GetGroup returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind.Group, and is useful for accessing the field via an interface.
+func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind) GetGroup() string {
+	return v.Group
+}
+
+// GetVersion returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind.Version, and is useful for accessing the field via an interface.
+func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind) GetVersion() string {
+	return v.Version
+}
+
+// GetKind returns ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind.Kind, and is useful for accessing the field via an interface.
+func (v *ServiceIntentsWithLabelsServiceIntentsClientOtterizeServiceIdentityPodOwnerKindGroupVersionKind) GetKind() string {
+	return v.Kind
 }
 
 // ServiceIntentsWithLabelsServiceIntentsIntentsOtterizeServiceIdentity includes the requested fields of the GraphQL type OtterizeServiceIdentity.
@@ -389,8 +427,9 @@ func (v *__ServiceIntentsUpToMapperV017Input) GetNamespaces() []string { return 
 
 // __ServiceIntentsWithLabelsInput is used internally by genqlient
 type __ServiceIntentsWithLabelsInput struct {
-	Namespaces     []string `json:"namespaces"`
-	IncludedLabels []string `json:"includedLabels"`
+	Namespaces       []string `json:"namespaces"`
+	IncludedLabels   []string `json:"includedLabels"`
+	IncludeAllLabels bool     `json:"includeAllLabels"`
 }
 
 // GetNamespaces returns __ServiceIntentsWithLabelsInput.Namespaces, and is useful for accessing the field via an interface.
@@ -398,6 +437,9 @@ func (v *__ServiceIntentsWithLabelsInput) GetNamespaces() []string { return v.Na
 
 // GetIncludedLabels returns __ServiceIntentsWithLabelsInput.IncludedLabels, and is useful for accessing the field via an interface.
 func (v *__ServiceIntentsWithLabelsInput) GetIncludedLabels() []string { return v.IncludedLabels }
+
+// GetIncludeAllLabels returns __ServiceIntentsWithLabelsInput.IncludeAllLabels, and is useful for accessing the field via an interface.
+func (v *__ServiceIntentsWithLabelsInput) GetIncludeAllLabels() bool { return v.IncludeAllLabels }
 
 func ResetCapture(
 	ctx context.Context,
@@ -471,17 +513,23 @@ func ServiceIntentsWithLabels(
 	client graphql.Client,
 	namespaces []string,
 	includedLabels []string,
+	includeAllLabels bool,
 ) (*ServiceIntentsWithLabelsResponse, error) {
 	req := &graphql.Request{
 		OpName: "ServiceIntentsWithLabels",
 		Query: `
-query ServiceIntentsWithLabels ($namespaces: [String!], $includedLabels: [String!]) {
-	serviceIntents(namespaces: $namespaces, includeLabels: $includedLabels) {
+query ServiceIntentsWithLabels ($namespaces: [String!], $includedLabels: [String!], $includeAllLabels: Boolean!) {
+	serviceIntents(namespaces: $namespaces, includeLabels: $includedLabels, includeAllLabels: $includeAllLabels) {
 		client {
 			... NamespacedNameFragment
 			labels {
 				key
 				value
+			}
+			podOwnerKind {
+				group
+				version
+				kind
 			}
 		}
 		intents {
@@ -499,8 +547,9 @@ fragment NamespacedNameFragment on OtterizeServiceIdentity {
 }
 `,
 		Variables: &__ServiceIntentsWithLabelsInput{
-			Namespaces:     namespaces,
-			IncludedLabels: includedLabels,
+			Namespaces:       namespaces,
+			IncludedLabels:   includedLabels,
+			IncludeAllLabels: includeAllLabels,
 		},
 	}
 	var err error
