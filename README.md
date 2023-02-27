@@ -50,7 +50,7 @@ brew install otterize/otterize/otterize-cli
 ```
 Linux 64-bit
 ```bash
-wget https://get.otterize.com/otterize-cli/v0.1.5/otterize_Linux_x86_64.tar.gz
+wget https://get.otterize.com/otterize-cli/v0.1.15/otterize_Linux_x86_64.tar.gz
 tar xf otterize_Linux_x86_64.tar.gz
 sudo cp otterize /usr/local/bin
 ```
@@ -60,7 +60,7 @@ scoop bucket add otterize-cli https://github.com/otterize/scoop-otterize-cli
 scoop update
 scoop install otterize-cli
 ```
-For more platforms, see [the installation guide](https://docs.otterize.com/k8s-installation/#install-the-otterize-cli).
+For more platforms, see [the installation guide](https://docs.otterize.com/installation#install-the-otterize-cli).
 
 
 ## Contributing

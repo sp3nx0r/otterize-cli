@@ -293,11 +293,11 @@
           }
         },
         "required": [
+          "id",
           "name",
-          "components",
           "namespaces",
           "serviceCount",
-          "id"
+          "components"
         ],
         "type": "object"
       },
@@ -366,8 +366,8 @@
           }
         },
         "required": [
-          "status",
-          "type"
+          "type",
+          "status"
         ],
         "type": "object"
       },
@@ -445,11 +445,11 @@
           }
         },
         "required": [
+          "id",
           "name",
           "namespaces",
           "serviceCount",
-          "appliedIntentsCount",
-          "id"
+          "appliedIntentsCount"
         ],
         "type": "object"
       },
@@ -493,7 +493,7 @@
           "clusterIds": {
             "items": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             },
@@ -502,7 +502,7 @@
           "environmentIds": {
             "items": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             },
@@ -518,7 +518,7 @@
           "namespaceIds": {
             "items": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             },
@@ -527,7 +527,7 @@
           "serviceIds": {
             "items": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             },
@@ -581,18 +581,15 @@
           }
         },
         "required": [
+          "id",
           "name",
           "type",
-          "credentials",
-          "id"
+          "credentials"
         ],
         "type": "object"
       },
       "IntegrationComponents": {
         "properties": {
-          "clusterId": {
-            "type": "string"
-          },
           "credentialsOperator": {
             "$ref": "#/components/schemas/CredentialsOperatorComponent"
           },
@@ -606,8 +603,7 @@
         "required": [
           "intentsOperator",
           "credentialsOperator",
-          "networkMapper",
-          "clusterId"
+          "networkMapper"
         ],
         "type": "object"
       },
@@ -698,8 +694,8 @@
           }
         },
         "required": [
-          "status",
-          "type"
+          "type",
+          "status"
         ],
         "type": "object"
       },
@@ -978,8 +974,8 @@
           }
         },
         "required": [
-          "status",
-          "type"
+          "type",
+          "status"
         ],
         "type": "object"
       },
@@ -1222,7 +1218,7 @@
   "info": {
     "title": "Otterize API Server",
     "version": "v1beta",
-    "x-revision": "110558604afcb7513f937d47ffc0beedde766830"
+    "x-revision": "f23026c8ade7d957e45fc0eb092d9cb034a8317b"
   },
   "openapi": "3.0.0",
   "paths": {
@@ -1486,7 +1482,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -1543,7 +1539,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -1600,7 +1596,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -1736,6 +1732,21 @@
               "pattern": "^[A-Za-z][A-Za-z0-9- _]{0,61}[A-Za-z0-9]$",
               "type": "string"
             }
+          },
+          {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/LabelInput"
+                  },
+                  "type": "array"
+                }
+              }
+            },
+            "in": "query",
+            "name": "labels",
+            "required": false
           }
         ],
         "responses": {
@@ -1866,7 +1877,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -1923,7 +1934,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -1980,7 +1991,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2062,7 +2073,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2138,7 +2149,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2220,7 +2231,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2231,7 +2242,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2324,7 +2335,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2335,7 +2346,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2465,7 +2476,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2543,13 +2554,13 @@
                 "properties": {
                   "clusterId": {
                     "example": "obj_12345",
-                    "format": "ouid",
+                    "format": "id",
                     "pattern": "^[A-Za-z]+_[a-z0-9]+$",
                     "type": "string"
                   },
                   "environmentId": {
                     "example": "obj_12345",
-                    "format": "ouid",
+                    "format": "id",
                     "pattern": "^[A-Za-z]+_[a-z0-9]+$",
                     "type": "string"
                   }
@@ -2615,7 +2626,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2628,7 +2639,7 @@
                 "properties": {
                   "environmentId": {
                     "example": "obj_12345",
-                    "format": "ouid",
+                    "format": "id",
                     "pattern": "^[A-Za-z]+_[a-z0-9]+$",
                     "type": "string"
                   }
@@ -2691,7 +2702,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2748,7 +2759,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2807,7 +2818,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2818,7 +2829,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2829,7 +2840,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -2891,7 +2902,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3155,7 +3166,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3212,7 +3223,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3269,7 +3280,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3387,7 +3398,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3398,7 +3409,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3468,7 +3479,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3479,7 +3490,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3552,7 +3563,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3611,7 +3622,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3624,7 +3635,7 @@
                 "properties": {
                   "environmentId": {
                     "example": "obj_12345",
-                    "format": "ouid",
+                    "format": "id",
                     "pattern": "^[A-Za-z]+_[a-z0-9]+$",
                     "type": "string"
                   }
@@ -3795,7 +3806,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3852,7 +3863,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3864,7 +3875,7 @@
               "schema": {
                 "properties": {
                   "imageURL": {
-                    "format": "url",
+                    "format": "omitempty,url",
                     "type": "string"
                   },
                   "name": {
@@ -3932,7 +3943,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -3943,7 +3954,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -4002,7 +4013,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -4013,7 +4024,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -4083,7 +4094,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -4094,7 +4105,7 @@
             "required": false,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -4167,7 +4178,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
@@ -4277,7 +4288,7 @@
             "required": true,
             "schema": {
               "example": "obj_12345",
-              "format": "ouid",
+              "format": "id",
               "pattern": "^[A-Za-z]+_[a-z0-9]+$",
               "type": "string"
             }
