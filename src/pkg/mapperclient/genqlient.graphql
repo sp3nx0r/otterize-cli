@@ -14,31 +14,50 @@ fragment NamespacedNameFragment on OtterizeServiceIdentity {
     namespace
 }
 
+fragment LabelsFragment on OtterizeServiceIdentity {
+    labels {
+        key
+        value
+    }
+}
+
+fragment NamespacedNameWithLabelsFragment on OtterizeServiceIdentity {
+    ...NamespacedNameFragment
+    ...LabelsFragment
+}
+
 
 query ServiceIntentsWithLabels($namespaces: [String!], $includedLabels: [String!], $includeAllLabels: Boolean!) {
     serviceIntents(namespaces: $namespaces, includeLabels: $includedLabels, includeAllLabels: $includeAllLabels) {
         client {
-            ...NamespacedNameFragment
-            labels {
-                key
-                value
-            }
-            podOwnerKind {
-                group
-                version
-                kind
-            }
+            ...NamespacedNameWithLabelsFragment
         }
         intents {
-            ...NamespacedNameFragment
-            labels {
-                key
-                value
-            }
+            ...NamespacedNameWithLabelsFragment
         }
     }
 }
 
 mutation ResetCapture {
     resetCapture
+}
+
+query Intents($namespaces: [String!], $includedLabels: [String!], $includeAllLabels: Boolean!) {
+    intents(namespaces: $namespaces, includeLabels: $includedLabels, includeAllLabels: $includeAllLabels) {
+        client {
+            ...NamespacedNameWithLabelsFragment
+        }
+        server {
+            ...NamespacedNameWithLabelsFragment
+        }
+        type
+        kafkaTopics {
+            name
+            operations
+        }
+        httpResources {
+            path
+            methods
+        }
+    }
 }
